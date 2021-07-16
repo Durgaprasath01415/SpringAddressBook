@@ -2,6 +2,7 @@ package com.bridgelabz.addressbook.service;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,10 @@ import com.bridgelabz.addressbook.repository.IPersonRepository;
 public class AddressBookService implements IPersonService {
 	@Autowired(required=true)
 	private IPersonRepository personRepository;
+	
+	@Autowired
+	private ModelMapper modelmapper;
+	
 
 	@Override
 	public List<Person> getAllContacts() {
@@ -47,9 +52,9 @@ public class AddressBookService implements IPersonService {
 
 		Person person = new Person();
 		person.getFirstName();
-		BeanUtils.copyProperties(personDTO, person);
+		Person per = modelmapper.map(personDTO, Person.class);
 		System.out.println(person);
-		return personRepository.save(person);
+		return personRepository.save(per);
 
 	}
 
@@ -85,4 +90,6 @@ public class AddressBookService implements IPersonService {
 	public Person getContactByphoneNumber(String phoneNumber) throws InvalidContactDetailsException {
 		return personRepository.getContactByphoneNumber(phoneNumber);
 	}
+	
+	
 }

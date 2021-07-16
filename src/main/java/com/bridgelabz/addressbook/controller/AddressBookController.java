@@ -85,7 +85,6 @@ public class AddressBookController {
 	public ResponseEntity<ResponseDTO> addContact( @RequestBody PersonDTO personDTO) throws InvalidContactDetailsException{
 		Person person = personService.addPerson(personDTO);
 		ResponseDTO respDTO = new ResponseDTO("Contact added with id : " + person.getId(), person);
-		
 		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
 	}
 	@PutMapping("/update/{id}")
